@@ -16,13 +16,13 @@ export function getSortedPostsData(){
         
         const matterResult = matter(fileContents)
 
-        return {id, ...matterResult.data,};
+        return {id, ...(matterResult.data as { date:string, title: string}),};
     });
 
-    return allPostsData.sort(({date: a},{date: b}) => {
-        if (a < b) return 1;
-        else if (a > b) return -1;
-        else return 0;
+    return allPostsData.sort((a,b) => {
+        if (a.date < b.date)
+            return 1
+        return -1
     })
 }
 
@@ -37,7 +37,7 @@ export async function getPostData(id){
     return {
         id,
         contentHtml,
-        ...matterResult.data,
+        ...(matterResult.data as {date:string, title: string}),
     };
 }
 
